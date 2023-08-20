@@ -1,0 +1,23 @@
+host: 127.0.0.1:8080
+info:
+  contact:
+    name: 作者：黄鹏举
+    url: https://huangpengju.github.io/
+  description: 这里是 ChitChat 论坛项目的 API 文档。
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: ChitChat API
+  version: "2.0"
+paths: {}
+schemes:
+- http
+- https
+securityDefinitions:
+  ApiKeyAuth:
+    description: 正在使用的安全定义的描述
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

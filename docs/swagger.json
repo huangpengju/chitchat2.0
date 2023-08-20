@@ -1,0 +1,31 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "这里是 ChitChat 论坛项目的 API 文档。",
+        "title": "ChitChat API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "作者：黄鹏举",
+            "url": "https://huangpengju.github.io/"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "2.0"
+    },
+    "host": "127.0.0.1:8080",
+    "paths": {},
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "正在使用的安全定义的描述",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
