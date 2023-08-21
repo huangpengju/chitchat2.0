@@ -3,7 +3,7 @@ info:
   contact:
     name: 作者：黄鹏举
     url: https://huangpengju.github.io/
-  description: 这里是 ChitChat 论坛项目的 API 文档。
+  description: 这里是 Go Web 实践项目 —— ChitChat2.0 API 文档。
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html

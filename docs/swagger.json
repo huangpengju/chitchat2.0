@@ -5,7 +5,7 @@
     ],
     "swagger": "2.0",
     "info": {
-        "description": "这里是 ChitChat 论坛项目的 API 文档。",
+        "description": "这里是 Go Web 实践项目 —— ChitChat2.0 API 文档。",
         "title": "ChitChat API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {

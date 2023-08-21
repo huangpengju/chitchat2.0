@@ -41,7 +41,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{"http", "https"},
 	Title:            "ChitChat API",
-	Description:      "这里是 ChitChat 论坛项目的 API 文档。",
+	Description:      "这里是 Go Web 实践项目 —— ChitChat2.0 API 文档。",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
