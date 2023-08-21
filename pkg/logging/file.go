@@ -3,6 +3,8 @@ package logging
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"time"
 
 	"chitchat2.0/pkg/setting"
@@ -19,4 +21,22 @@ func getLogFileFullPath() string {
 	return fmt.Sprintf("%s%s", prefixPath, suffixPath)
 }
 
-//
+// openLogFile 根据完整的 log 路径打开 log 文件
+// log 文件不存在则创建
+func openLogFile(filePath string) *os.File {
+	// 返回指定文件对象
+	_, err := os.Stat(filePath)
+	switch {
+	case os.IsNotExist(err): // 返回一个布尔值说明该错误是否表示一个文件或目录不存在。
+		// 创建文件
+		mkDir()
+	case os.IsPermission(err): //返回一个布尔值说明该错误是否表示因权限不足要求被拒绝。
+		log.Fatalf(":", err)
+	}
+}
+
+func mkDir() {
+	// os.Getwd :返回当前目录对应的根目录
+	dir, _ := os.Getwd()
+
+}
