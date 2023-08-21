@@ -32,7 +32,7 @@ import (
 // @name						Authorization
 // @description				正在使用的安全定义的描述
 func main() {
-	setting.Init("./conf/app.ini")
+	setting.Init()
 
 	router := routers.InitRouter()
 

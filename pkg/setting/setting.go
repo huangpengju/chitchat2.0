@@ -21,13 +21,13 @@ var (
 )
 
 // Init 用于初始化配置文件
-func Init(iniPath string) {
-	fmt.Println("iniPath==", iniPath)
+func Init() {
+	fmt.Println("1111111111")
 	var err error
 	// 加载并解析INI数据源
-	// Cfg, err = ini.Load("conf/app.ini")
+	Cfg, err = ini.Load("conf/app.ini")
 
-	Cfg, err = ini.Load(iniPath)
+	// Cfg, err = ini.Load(iniPath)
 	if err != nil {
 		fmt.Println("加载解析 conf/app.ini 错误", err)
 		return
