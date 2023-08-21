@@ -2,27 +2,27 @@ package setting
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
-
-	"gopkg.in/ini.v1"
 )
 
 func TestLoadLog(t *testing.T) {
-	var err error
-	// 加载并解析INI数据源
-	Cfg, err = ini.Load("conf/app.ini")
+	// Getwd返回一个对应当前工作目录的根路径。
+	path, _ := os.Getwd()
+	// 判断 path2 是否有后缀字符串 setting
+	if strings.HasSuffix(path, "setting") {
+		// Dir返回路径除去最后一个路径元素的部分，即该路径最后一个元素所在的目录
+		path1 := filepath.Dir(path)
 
-	// Cfg, err = ini.Load(iniPath)
-	if err != nil {
-		fmt.Println("加载解析 conf/app.ini 错误", err)
-		return
+		if strings.HasSuffix(path1, "pkg") {
+			path2 := filepath.Dir(path1)
+			_ = os.Chdir(path2)
+			// 测试
+			Init(path2)
+		}
 	}
-	// 加载应用的模式【debug 开发 release 发布】
-	loadBase()
-
-	// laodLog 加载配置文件中的 log 信息
-	loadLog()
-
 	fmt.Println("RunMode=", RunMode)
 	fmt.Println("LogSavePath=", LogSavePath)
 	fmt.Println("LogSaveName=", LogSaveName)

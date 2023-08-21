@@ -21,11 +21,11 @@ var (
 )
 
 // Init 用于初始化配置文件
-func Init() {
-	fmt.Println("1111111111")
+func Init(path string) {
 	var err error
 	// 加载并解析INI数据源
-	Cfg, err = ini.Load("conf/app.ini")
+	// Cfg, err = ini.Load("conf/app.ini")
+	Cfg, err = ini.Load(fmt.Sprintf("%s%s", path, "/conf/app.ini"))
 
 	// Cfg, err = ini.Load(iniPath)
 	if err != nil {

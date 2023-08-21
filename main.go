@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	_ "chitchat2.0/docs"
 	"chitchat2.0/pkg/setting"
@@ -32,8 +33,8 @@ import (
 // @name						Authorization
 // @description				正在使用的安全定义的描述
 func main() {
-	setting.Init()
-
+	path, _ := os.Getwd()
+	setting.Init(path)
 	router := routers.InitRouter()
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
