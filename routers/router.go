@@ -2,6 +2,7 @@ package routers
 
 import (
 	"net/http"
+	"time"
 
 	"chitchat2.0/pkg/setting"
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,8 @@ func InitRouter() *gin.Engine {
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	r.GET("/", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, "你好")
+		time.Sleep(5 * time.Second)
+		ctx.String(http.StatusOK, "你好a")
 	})
 	return r
 }
