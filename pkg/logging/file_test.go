@@ -6,8 +6,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-
-	"chitchat2.0/pkg/setting"
 )
 
 func TestGetLogFilePullPath(t *testing.T) {
@@ -19,7 +17,7 @@ func TestGetLogFilePullPath(t *testing.T) {
 		if strings.HasSuffix(path1, "pkg") {
 			path2 := filepath.Dir(path1)
 			_ = os.Chdir(path2)
-			setting.Init(path2)
+			// setting.Init(path2)
 		}
 	}
 	// 测试

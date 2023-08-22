@@ -2,10 +2,8 @@ package main
 
 import (
 	"net/http"
-	"os"
 
 	_ "chitchat2.0/docs"
-	"chitchat2.0/pkg/setting"
 	"chitchat2.0/routers"
 	swaggerfiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -33,9 +31,8 @@ import (
 // @name						Authorization
 // @description				正在使用的安全定义的描述
 func main() {
-	path, _ := os.Getwd()
-	setting.Init(path)
 	router := routers.InitRouter()
+	// logging.Info(router)
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	s := &http.Server{

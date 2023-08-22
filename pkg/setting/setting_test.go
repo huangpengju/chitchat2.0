@@ -20,7 +20,7 @@ func TestLoadLog(t *testing.T) {
 			path2 := filepath.Dir(path1)
 			_ = os.Chdir(path2)
 			// 测试
-			Init(path2)
+			// Init(path2)
 		}
 	}
 	fmt.Println("RunMode=", RunMode)

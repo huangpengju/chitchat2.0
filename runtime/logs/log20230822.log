@@ -1,0 +1,1 @@
+[INFO][main.go:36]2023/08/22 14:02:43 &{{[] / 0xc0000849c0 true} true false false true false false true false [X-Forwarded-For X-Real-IP]  33554432 false false {{{ }}} while(1); <nil> map[] [] [] [] [] {{} <nil> 0 <nil> 0 0x9b1d00} [{GET 0xc000120000}] 0 1 [0.0.0.0/0 ::/0] [0x17d9200 0x17d9240]}

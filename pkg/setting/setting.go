@@ -21,13 +21,10 @@ var (
 )
 
 // Init 用于初始化配置文件
-func Init(path string) {
+func init() {
 	var err error
 	// 加载并解析INI数据源
-	// Cfg, err = ini.Load("conf/app.ini")
-	Cfg, err = ini.Load(fmt.Sprintf("%s%s", path, "/conf/app.ini"))
-
-	// Cfg, err = ini.Load(iniPath)
+	Cfg, err = ini.Load("conf/app.ini")
 	if err != nil {
 		fmt.Println("加载解析 conf/app.ini 错误", err)
 		return
@@ -51,7 +48,7 @@ func loadBase() {
 // laodLog 加载配置文件中的 log 信息
 func loadLog() {
 	// LogSavePath 日志保存路径
-	LogSavePath = Cfg.Section("log").Key("LOG_SAVE_PATH").MustString("/runtime/logs")
+	LogSavePath = Cfg.Section("log").Key("LOG_SAVE_PATH").MustString("runtime/logs")
 	// LogSaveName 日志文件保存名称
 	LogSaveName = Cfg.Section("log").Key("LOG_SAVE_NAME").MustString("log")
 	// LogFileExt 日志文件的后缀名
