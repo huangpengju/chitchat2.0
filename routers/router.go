@@ -5,6 +5,8 @@ import (
 
 	"chitchat2.0/pkg/setting"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"     // swagger embed files
+	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
 
 func InitRouter() *gin.Engine {
@@ -13,6 +15,8 @@ func InitRouter() *gin.Engine {
 
 	// 创建不带中间件的路由
 	r := gin.New()
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "你好")
 	})

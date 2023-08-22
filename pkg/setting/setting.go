@@ -3,6 +3,8 @@ package setting
 
 import (
 	"fmt"
+	"log"
+	"time"
 
 	"gopkg.in/ini.v1"
 )
@@ -12,6 +14,12 @@ var (
 
 	// 应用的模式
 	RunMode string //【debug 开发 release 发布】
+
+	// Server 配置
+	HTTPPort     int
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
+	Static       string
 
 	// log
 	LogSavePath string // 日志保存路径
@@ -32,6 +40,9 @@ func init() {
 	// 加载应用的模式【debug 开发 release 发布】
 	loadBase()
 
+	// loadServer 加载 server 服务器配置
+	loadServer()
+
 	// laodLog 加载配置文件中的 log 信息
 	loadLog()
 
@@ -45,7 +56,23 @@ func loadBase() {
 	RunMode = Cfg.Section("").Key("RUN_MODE").MustString("debug")
 }
 
-// laodLog 加载配置文件中的 log 信息
+// loadServer 加载 server 服务器配置
+func loadServer() {
+	// HTTP_PORT = 8000
+	// READ_TIMEOUT = 60
+	// WRITE_TIMEOUT = 60
+	// Static = public
+	sec, err := Cfg.GetSection("server")
+	if err != nil {
+		log.Fatalf("获取 server 分区失败：%v", err)
+	}
+	HTTPPort = sec.Key("HTTP_PORT").MustInt(8000)
+	ReadTimeout = time.Duration(sec.Key("READ_TIMEOUT").MustInt(60)) * time.Second
+	WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
+	Static = sec.Key("STATIC").MustString("public")
+}
+
+// loadLog 加载配置文件中的 log 信息
 func loadLog() {
 	// LogSavePath 日志保存路径
 	LogSavePath = Cfg.Section("log").Key("LOG_SAVE_PATH").MustString("runtime/logs")
