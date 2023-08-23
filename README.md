@@ -31,6 +31,8 @@ Centos7 安装教程：https://blog.csdn.net/u014644574/article/details/11249454
 编译的时候需要修改 ENV ：`go env -w GOOS=linux`，`go env -w GOARCH=adm64`  
 FinalShell SSH工具 Windows 版本下载：http://www.hostbuf.com/downloads/finalshell_install.exe
 
+6. HTML 模板渲染
+
 ## 项目依赖
 1. 搭建项目
 * `go`
