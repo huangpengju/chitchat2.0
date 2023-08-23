@@ -9,7 +9,6 @@
 <title>Document</title>
 </head>
 <body>
-    {{template "public/page_header.html" .}}
 <h1>这是一个 html 模板</h1>
 <h3>{{.title}}</h3>
 姓名：<h4>{{ .user.Name}}</h4>
@@ -17,6 +16,7 @@
 年龄：<h4>{{ .user.Age}}</h4>
 <div class="admin-test">
     测试背景
+    {{ .now | formatDate }}
 </div>
 </body>
 </html>

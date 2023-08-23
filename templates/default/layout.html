@@ -1,0 +1,29 @@
+{{ define "default/layout.html" }}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChitChat</title>
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    {{ if eq .state 1}}
+    {{ template "default/public.navbar.html" . }}
+    {{else}}
+    {{ template "default/private.navbar.html" . }}
+    {{end}}
+    <div class="container">
+      {{ template "default/index.html" .  }}  
+    
+    </div> <!-- /container -->
+    
+    <script src="/public/js/jquery-2.1.1.min.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+{{ end }}
