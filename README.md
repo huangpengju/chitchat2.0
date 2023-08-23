@@ -36,6 +36,9 @@ FinalShell SSH工具 Windows 版本下载：http://www.hostbuf.com/downloads/fin
 其他博客：https://blog.csdn.net/zhoupenghui168/article/details/128996683  
 先设置一个路由，并渲染出该路由的模板：`layout.html` ，然后给`layout.html`模板加载`css` `js`资源,再引入其他嵌套模板到`layout.html`中。最后设置其他路由，实现页面跳转。
 
+7. 实现登录功能
+* 设置路由、登录中间件  
+使用 ShouldBind 
 
 ## 项目依赖
 1. 搭建项目
@@ -59,6 +62,8 @@ FinalShell SSH工具 Windows 版本下载：http://www.hostbuf.com/downloads/fin
 * `go get -u github.com/fvbock/endless`
 
 6. HTML 模板渲染
+
+7. ShouldBind
 
 ## 项目结构
 - conf : 用于存储配置文件

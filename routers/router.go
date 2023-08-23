@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"chitchat2.0/pkg/setting"
+	"chitchat2.0/routers/api"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
@@ -28,8 +29,17 @@ func InitRouter() *gin.Engine {
 
 	// 创建不带中间件的路由
 	r := gin.New()
+	// 全局中间件 Logger 中间件将日志写入 gin.DefaultWriter
+	r.Use(gin.Logger())
+	// Recovery 中间件会 revover 恢复 任何 panic
+	r.Use(gin.Recovery())
+
 	// Swagger API 文档的路由
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	// 登录（验证用户名和密码），并签发 Token
+	r.GET("/login", api.GetAuth)
+
 	users := []UserInfo{
 		{Uuid: 1, Name: "李四", Gender: "男", Age: 17, CreatedAtDate: "2023-08-22", NumReplies: 1, Topic: "前台---张三"},
 		{Uuid: 2, Name: "王二", Gender: "男", Age: 18, CreatedAtDate: "2023-08-23", NumReplies: 2, Topic: "前台---王二"},
