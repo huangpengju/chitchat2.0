@@ -37,7 +37,8 @@ func InitRouter() *gin.Engine {
 	r.SetFuncMap(template.FuncMap{
 		"formatDate": formatAsDate,
 	})
-	r.Static("/public", setting.Static)
+	// /public 表示路由，setting.Staic 表示路径 ./public
+	r.Static("/static", setting.Static)
 
 	// 加载 templates 中所有模板文件
 	// 使用不同目录下名称相同的模板，注意：一定要放在配置路由之前才行
