@@ -47,11 +47,11 @@ func main() {
 	endless.DefaultReadTimeOut = setting.ReadTimeout
 	endless.DefaultWriteTimeOut = setting.WriteTimeout
 	endless.DefaultMaxHeaderBytes = 1 << 20
-	endPoint := fmt.Sprintf("192.168.142.252:%d", setting.HTTPPort)
+	endPoint := fmt.Sprintf("%s:%d", setting.HTTPHost, setting.HTTPPort)
 
 	server := endless.NewServer(endPoint, routers.InitRouter())
 	server.BeforeBegin = func(add string) {
-		log.Printf("现在的 pid 是 %d", syscall.Getpid())
+		log.Printf("现在的 pid 是== %d", syscall.Getpid())
 
 	}
 	err := server.ListenAndServe()

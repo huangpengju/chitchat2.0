@@ -16,6 +16,7 @@ var (
 	RunMode string //【debug 开发 release 发布】
 
 	// Server 配置
+	HTTPHost     string
 	HTTPPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
@@ -66,6 +67,7 @@ func loadServer() {
 	if err != nil {
 		log.Fatalf("获取 server 分区失败：%v", err)
 	}
+	HTTPHost = sec.Key("HTTP_HOST").MustString("0.0.0.0")
 	HTTPPort = sec.Key("HTTP_PORT").MustInt(8000)
 	ReadTimeout = time.Duration(sec.Key("READ_TIMEOUT").MustInt(60)) * time.Second
 	WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
