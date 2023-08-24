@@ -28,15 +28,21 @@ ChitChat2.0 仓库是中 ChitChat 项目的升级版
 开源镜像站：https://mirrors.aliyun.com/centos/7/isos/x86_64/?spm=a2c6h.25603864.0.0.685845113SlugF  
 Centos7 安装教程：https://blog.csdn.net/u014644574/article/details/112494541
 借助 FinalShell SSH工具把编译好的可执行的程序发送到虚拟机中的 Linux 环境  
-编译的时候需要修改 ENV ：`go env -w GOOS=linux`，`go env -w GOARCH=adm64`  
+编译的时候需要修改 ENV ：`go env -w GOOS=linux`，`go env -w GOARCH=amd64`，`go build main.go` 或者 `set GOARCH=amd64`，`set GOOS=linux`，`go build main.go`  
 FinalShell SSH工具 Windows 版本下载：http://www.hostbuf.com/downloads/finalshell_install.exe
 
-6. HTML 模板渲染
+6. golang 程序的热加载
+* 所谓热加载就是当对代码进行修改时，程序能够自动重新加载并执行，这在开发中是非常便利的，可以快速进行代码测试，省去了每次手动重新编译。  
+beego 中可以使用官方给提供bee工具来热加载项目，但是 gin 中并没有官方提供的热加载工具，这个时候要实现热加载就可以借助第三方的工具。  
+工具 1（推荐）：https://github.com/gravityblast/fresh  
+工具 2：https://github.com/codegangsta/gin
+
+7. HTML 模板渲染
 * 参考 gin Web Framework :https://gin-gonic.com/zh-cn/docs/examples/html-rendering/  
 其他博客：https://blog.csdn.net/zhoupenghui168/article/details/128996683  
 先设置一个路由，并渲染出该路由的模板：`layout.html` ，然后给`layout.html`模板加载`css` `js`资源,再引入其他嵌套模板到`layout.html`中。最后设置其他路由，实现页面跳转。
 
-7. 实现登录功能
+8. 实现登录功能
 * 设置路由、登录中间件  
 使用 ShouldBind 
 
@@ -61,9 +67,14 @@ FinalShell SSH工具 Windows 版本下载：http://www.hostbuf.com/downloads/fin
 5. 优雅地重启
 * `go get -u github.com/fvbock/endless`
 
-6. HTML 模板渲染
+6. golang 程序的热加载
+* 工具1：`go get github.com/pilu/fresh` 然后运行命令 fresh 或者 `go install github.com/pilu/fresh@latest` 然后运行命令 `fresh` 
 
-7. ShouldBind
+* 工具2：`go get -u github.com/codegangsta/gin` 然后运行命令 `gin run main.go`` 
+
+7. HTML 模板渲染
+
+8. ShouldBind
 
 ## 项目结构
 - conf : 用于存储配置文件
