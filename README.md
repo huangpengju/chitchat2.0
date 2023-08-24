@@ -68,7 +68,7 @@ beego 中可以使用官方给提供bee工具来热加载项目，但是 gin 中
 * `go get -u github.com/fvbock/endless`
 
 6. golang 程序的热加载
-* 工具1：`go get github.com/pilu/fresh` 然后运行命令 fresh 或者 `go install github.com/pilu/fresh@latest` 然后运行命令 `fresh` 
+* 工具1：`go install github.com/pilu/fresh@latest`，`go get github.com/pilu/fresh` 然后运行命令 fresh
 
 * 工具2：`go get -u github.com/codegangsta/gin` 然后运行命令 `gin run main.go`` 
 
