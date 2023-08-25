@@ -15,12 +15,20 @@ var (
 	// 应用的模式
 	RunMode string //【debug 开发 release 发布】
 
-	// Server 配置
+	// server 配置
 	HTTPHost     string
 	HTTPPort     int
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 	Static       string
+
+	// database 配置
+	DbType        string
+	DbUser        string
+	DbPassword    string
+	DbHost        string
+	DbName        string
+	DbTablePrefix string
 
 	// log
 	LogSavePath string // 日志保存路径
@@ -43,6 +51,9 @@ func init() {
 
 	// loadServer 加载 server 服务器配置
 	loadServer()
+
+	// laodDatabase 加载配置文件中的 Database 信息
+	loadDatabase()
 
 	// laodLog 加载配置文件中的 log 信息
 	loadLog()
@@ -72,6 +83,20 @@ func loadServer() {
 	ReadTimeout = time.Duration(sec.Key("READ_TIMEOUT").MustInt(60)) * time.Second
 	WriteTimeout = time.Duration(sec.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
 	Static = sec.Key("STATIC").MustString("public")
+}
+
+// loadDatabase 加载配置文件中的 Database 信息
+func loadDatabase() {
+	sec, err := Cfg.GetSection("database")
+	if err != nil {
+		log.Fatalf("获取 database 分区失败：%v", err)
+	}
+	DbType = sec.Key("DB_TYPE").MustString("mysql")
+	DbUser = sec.Key("DB_USER").MustString("root")
+	DbPassword = sec.Key("DB_PASSWORD").MustString("Aa_123456")
+	DbHost = sec.Key("DB_HOST").MustString("127.0.0.1:3306")
+	DbName = sec.Key("DB_NAME").MustString("chitchat")
+	DbTablePrefix = sec.Key("DB_TABLE_PREFIX").MustString("cc_")
 }
 
 // loadLog 加载配置文件中的 log 信息

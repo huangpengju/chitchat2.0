@@ -6,6 +6,7 @@ import (
 	"syscall"
 
 	_ "chitchat2.0/docs"
+	_ "chitchat2.0/models"
 	"chitchat2.0/pkg/setting"
 	"chitchat2.0/routers"
 	"github.com/fvbock/endless"

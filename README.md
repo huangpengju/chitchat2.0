@@ -42,7 +42,13 @@ beego 中可以使用官方给提供bee工具来热加载项目，但是 gin 中
 其他博客：https://blog.csdn.net/zhoupenghui168/article/details/128996683  
 先设置一个路由，并渲染出该路由的模板：`layout.html` ，然后给`layout.html`模板加载`css` `js`资源,再引入其他嵌套模板到`layout.html`中。最后设置其他路由，实现页面跳转。
 
-8. 实现登录功能
+8. 连接数据库
+* 创建建库，设计数据库表；
+* 下载 gorm 依赖和 mysql 数据库驱动依赖；
+* 读取数据库配置信息后连接 mysql 数据库,设置表前缀和不加 s,启用日志和设置连接池；
+* 表自动迁移同时设置表关系（外键关联）和 表后缀信息（ENGINE=InnoDB charset=utf8mb4 COLLATE=utf8mb4_unicode_ci）
+
+9. 实现注册、登录功能
 * 设置路由、登录中间件  
 使用 ShouldBind 
 
@@ -73,8 +79,12 @@ beego 中可以使用官方给提供bee工具来热加载项目，但是 gin 中
 * 工具2：`go get -u github.com/codegangsta/gin` 然后运行命令 `gin run main.go`` 
 
 7. HTML 模板渲染
+* r.LoadHTMLGlob
 
-8. ShouldBind
+8. gorm 和 驱动程序
+* `go get -u gorm.io/gorm` 或 `go get -u github.com/jinzhu/gorm` 一般用后者
+* `go get -u github.com/jinzhu/gorm/dialects/mysql`
+
 
 ## 项目结构
 - conf : 用于存储配置文件
