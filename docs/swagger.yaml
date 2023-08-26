@@ -1,4 +1,48 @@
-host: 127.0.0.1:8080
+definitions:
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        additionalProperties:
+          items:
+            type: string
+          type: array
+        description: Message string `json:"message" example:"status bad request"`
+        type: object
+    type: object
+  serializer.Response:
+    properties:
+      data:
+        description: 返回数据
+      error:
+        description: 返回的错误
+        type: string
+      message:
+        description: 返回的消息
+        type: string
+      status:
+        description: 响应状态码
+        type: integer
+    type: object
+  service.UserService:
+    properties:
+      email:
+        type: string
+      password:
+        maxLength: 16
+        minLength: 5
+        type: string
+      username:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - password
+    - username
+    type: object
+host: 127.0.0.1:8000
 info:
   contact:
     name: 作者：黄鹏举
@@ -10,7 +54,70 @@ info:
   termsOfService: http://swagger.io/terms/
   title: ChitChat API
   version: "2.0"
-paths: {}
+paths:
+  /authenticate:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate 接口实现了用户登录功能
+      parameters:
+      - description: UserName(账户)
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: Password(密码)
+        in: query
+        name: password
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.UserService'
+        "400":
+          description: 参数绑定失败
+          schema:
+            type: string
+      summary: 用户登录
+      tags:
+      - User
+  /signup_account:
+    post:
+      consumes:
+      - application/json
+      description: SignupAccount 接口实现了用户注册功能
+      parameters:
+      - description: UserName(账户)
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: Email(邮箱)
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: Password(密码)
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 注册成功
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "400":
+          description: 参数验证失败
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: 用户注册
+      tags:
+      - User
 schemes:
 - http
 - https

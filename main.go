@@ -8,6 +8,7 @@ import (
 	_ "chitchat2.0/docs"
 	_ "chitchat2.0/models"
 	"chitchat2.0/pkg/setting"
+	_ "chitchat2.0/pkg/validator"
 	"chitchat2.0/routers"
 	"github.com/fvbock/endless"
 )
@@ -25,7 +26,7 @@ import (
 // @license.name	Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host 127.0.0.1:8080
+// @host 127.0.0.1:8000
 // BasePath /api/v1
 
 // @schemes http https

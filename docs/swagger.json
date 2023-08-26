@@ -18,8 +18,166 @@
         },
         "version": "2.0"
     },
-    "host": "127.0.0.1:8080",
-    "paths": {},
+    "host": "127.0.0.1:8000",
+    "paths": {
+        "/authenticate": {
+            "post": {
+                "description": "Authenticate 接口实现了用户登录功能",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserName(账户)",
+                        "name": "username",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Password(密码)",
+                        "name": "password",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/service.UserService"
+                        }
+                    },
+                    "400": {
+                        "description": "参数绑定失败",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/signup_account": {
+            "post": {
+                "description": "SignupAccount 接口实现了用户注册功能",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "用户注册",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserName(账户)",
+                        "name": "username",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Email(邮箱)",
+                        "name": "email",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Password(密码)",
+                        "name": "password",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "注册成功",
+                        "schema": {
+                            "$ref": "#/definitions/serializer.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "参数验证失败",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "httputil.HTTPError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 400
+                },
+                "message": {
+                    "description": "Message string `json:\"message\" example:\"status bad request\"`",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "serializer.Response": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "返回数据"
+                },
+                "error": {
+                    "description": "返回的错误",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "返回的消息",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "响应状态码",
+                    "type": "integer"
+                }
+            }
+        },
+        "service.UserService": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 16,
+                    "minLength": 5
+                },
+                "username": {
+                    "type": "string",
+                    "maxLength": 15,
+                    "minLength": 3
+                }
+            }
+        }
+    },
     "securityDefinitions": {
         "ApiKeyAuth": {
             "description": "正在使用的安全定义的描述",

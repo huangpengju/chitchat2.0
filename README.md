@@ -7,8 +7,10 @@ ChitChat2.0 仓库是中 ChitChat 项目的升级版
 ## 项目思路
 1. 搭建项目
 * Go + Gin 开始搭建项目
-* 为已搭建的项目加上 Swagger，Swag 将 Go 的注释转换为 Swagger2.0 文档
-* Swag 支持 Gin 框架，实现 Swag 与 Gin 集成
+* 为已搭建的项目加上 Swagger，Swag 将 Go 的注释转换为 Swagger2.0 文档  
+https://github.com/swaggo/swag/blob/master/README_zh-CN.md
+* Swag 支持 Gin 框架，实现 Swag 与 Gin 集成  
+https://github.com/swaggo/gin-swagger
 
 2. 配置文件
 * 创建 ini 文件。
