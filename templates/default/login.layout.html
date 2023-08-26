@@ -11,7 +11,8 @@
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/css/login.css" rel="stylesheet">
   </head>
-  <body>
+  <body style="padding-top:0px">
+      {{ template "default/public.navbar.html"}}
     <div class="container">
       {{ if eq .state 1}}
       {{ template "default/login.html" . }}
