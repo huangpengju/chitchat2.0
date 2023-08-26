@@ -76,7 +76,7 @@ func (userService *UserService) RegisterBegin() serializer.Response {
 	if count == 1 {
 		return serializer.Response{
 			Status:  http.StatusBadRequest, // 400
-			Message: fmt.Sprintf("用户“%v”已存在", userService.UserName),
+			Message: fmt.Sprintf("账号“%v”已存在", userService.UserName),
 		}
 	}
 	user.UserName = userService.UserName
@@ -119,6 +119,6 @@ func (userService *UserService) RegisterBegin() serializer.Response {
 	}
 	return serializer.Response{
 		Status:  http.StatusOK, // 200
-		Message: "用户注册成功",
+		Message: "账号注册成功",
 	}
 }

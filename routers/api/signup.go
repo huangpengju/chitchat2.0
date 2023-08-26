@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"chitchat2.0/pkg/httputil"
+	"chitchat2.0/pkg/validator"
 	"chitchat2.0/service"
 	"github.com/gin-gonic/gin"
 )
@@ -12,6 +12,7 @@ import (
 func Signup(c *gin.Context) {
 	c.HTML(http.StatusOK, "default/login.layout.html", gin.H{
 		"state": 0,
+		"msg":   "在下面注册一个账户",
 	})
 }
 
@@ -34,9 +35,25 @@ func SignupAccount(c *gin.Context) {
 		// 绑定成功后，进行注册
 		// serializer := userService.Register()
 		serializer := userService.RegisterBegin()
-		c.JSON(http.StatusOK, serializer)
+		// c.Redirect(http.StatusFound, "/login")
+		if serializer.Status != 200 {
+			c.HTML(http.StatusOK, "default/login.layout.html", gin.H{
+				"state": 0,
+				"msg":   serializer.Message,
+			})
+		} else {
+			c.HTML(http.StatusOK, "default/login.layout.html", gin.H{
+				"state": 1,
+				"msg":   serializer.Message,
+			})
+		}
 	} else {
-		httputil.NewError(c, http.StatusBadRequest, err)
+		// httputil.NewError(c, http.StatusBadRequest, err)
+
+		c.HTML(http.StatusBadRequest, "default/login.layout.html", gin.H{
+			"state":   0,
+			"message": validator.Translate(err),
+		})
 	}
 
 }

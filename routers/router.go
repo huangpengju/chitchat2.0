@@ -65,7 +65,7 @@ func InitRouter() *gin.Engine {
 
 	r.GET("/chitchat", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "default/layout.html", gin.H{
-			"state": 1,
+			"state": 1, // 加载公共的导航栏
 			"users": users,
 		})
 	})

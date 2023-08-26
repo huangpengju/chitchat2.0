@@ -10,6 +10,7 @@ import (
 func Login(c *gin.Context) {
 	c.HTML(http.StatusOK, "default/login.layout.html", gin.H{
 		"state": 1,
+		"msg":   "",
 	})
 }
 
