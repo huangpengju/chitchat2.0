@@ -8,6 +8,7 @@ import (
 
 	"chitchat2.0/pkg/setting"
 	"chitchat2.0/routers/api"
+
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware

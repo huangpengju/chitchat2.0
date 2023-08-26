@@ -6,12 +6,18 @@ import (
 
 	"chitchat2.0/models"
 	"chitchat2.0/pkg/serializer"
+	"github.com/jinzhu/gorm"
 )
 
 type UserService struct {
 	UserName string `form:"username" binding:"required,min=3,max=15"`
 	Password string `form:"password" binding:"required,min=5,max=16"`
 	Email    string `form:"email" binding:"email"`
+}
+
+type UserLoginService struct {
+	UserName string `form:"username" binding:"required,min=3,max=15"`
+	Password string `form:"password" binding:"required,min=5,max=16"`
 }
 
 // Register 实现用户注册(未开事物)
@@ -120,5 +126,41 @@ func (userService *UserService) RegisterBegin() serializer.Response {
 	return serializer.Response{
 		Status:  http.StatusOK, // 200
 		Message: "账号注册成功",
+	}
+}
+
+func (userService *UserLoginService) Login() serializer.Response {
+
+	var user models.User
+	if err := models.Db.Where("user_name=?", userService.UserName).First(&user).Error; err != nil {
+		if gorm.IsRecordNotFoundError(err) {
+			return serializer.Response{
+				Status:  http.StatusInternalServerError, //500
+				Data:    err,
+				Message: "数据库查询用户信息出错",
+			}
+		}
+		// 用户存在，其他因素的错误
+		return serializer.Response{
+			Status:  http.StatusBadRequest, //400
+			Data:    err,
+			Message: "账户不存在，请先注册",
+		}
+
+	}
+	// 找到用户
+	// 去验证登录用户的密码
+	if !user.CheckPassword(userService.Password) {
+		// 密码不相同
+		return serializer.Response{
+			Status:  http.StatusBadRequest, //400
+			Message: "密码错误",
+		}
+	}
+	// 返回用户信息
+	return serializer.Response{
+		Status:  http.StatusOK,
+		Data:    user,
+		Message: "登录成功",
 	}
 }

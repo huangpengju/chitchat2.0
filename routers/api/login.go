@@ -3,6 +3,8 @@ package api
 import (
 	"net/http"
 
+	"chitchat2.0/pkg/validator"
+	"chitchat2.0/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +27,40 @@ func Login(c *gin.Context) {
 // @Failure 400 {string} string "参数绑定失败"
 // @Router /authenticate [post]
 func Authenticate(c *gin.Context) {
-	c.String(http.StatusOK, "开始登录")
+	var userLogin service.UserLoginService
 
+	if err := c.ShouldBind(&userLogin); err == nil {
+		serializer := userLogin.Login()
+		if serializer.Status != 200 {
+			c.HTML(http.StatusOK, "default/login.layout.html", gin.H{
+				"state": 1,
+				"msg":   serializer.Message,
+			})
+		} else {
+			users := []UserInfo{
+				{Uuid: 1, Name: "李四1", Gender: "男", Age: 17, CreatedAtDate: "2023-08-22", NumReplies: 1, Topic: "前台1号---张三"},
+				{Uuid: 2, Name: "王二2", Gender: "男", Age: 18, CreatedAtDate: "2023-08-23", NumReplies: 2, Topic: "前台2号---王二"},
+				{Uuid: 3, Name: "麻子3", Gender: "男", Age: 19, CreatedAtDate: "2023-08-24", NumReplies: 3, Topic: "前台3号---麻子"}}
+			c.HTML(http.StatusOK, "default/layout.html", gin.H{
+				"state": 0,
+				"users": users,
+			})
+		}
+
+	} else {
+		c.HTML(http.StatusBadRequest, "default/login.layout.html", gin.H{
+			"state":   1,
+			"message": validator.Translate(err),
+		})
+	}
+}
+
+type UserInfo struct {
+	Name          string
+	Gender        string
+	Age           int
+	CreatedAtDate string
+	NumReplies    int
+	Topic         string
+	Uuid          int
 }
