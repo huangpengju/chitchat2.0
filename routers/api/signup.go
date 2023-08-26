@@ -32,7 +32,8 @@ func SignupAccount(c *gin.Context) {
 	var userService service.UserService
 	if err := c.ShouldBind(&userService); err == nil {
 		// 绑定成功后，进行注册
-		serializer := userService.Register()
+		// serializer := userService.Register()
+		serializer := userService.RegisterBegin()
 		c.JSON(http.StatusOK, serializer)
 	} else {
 		httputil.NewError(c, http.StatusBadRequest, err)

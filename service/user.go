@@ -14,12 +14,12 @@ type UserService struct {
 	Email    string `form:"email" binding:"email"`
 }
 
-// Register 实现用户注册
+// Register 实现用户注册(未开事物)
 func (userService *UserService) Register() serializer.Response {
 	// 1.先检查用户是否存在
 	// 2.给模型赋值（对密码进行加密）
 	// 3.实现注册
-	fmt.Println(userService)
+
 	// 数据库 User 模型 和 UserInfo 模型
 	var user models.User
 	var userInfo models.UserInfo
@@ -43,7 +43,7 @@ func (userService *UserService) Register() serializer.Response {
 	if err := user.SetPassword(userService.Password); err != nil {
 		return serializer.Response{
 			Status:  http.StatusBadRequest, //400
-			Message: err.Error(),
+			Message: err.Error(),           // 密码加密错误
 		}
 	}
 	// 开始注册用户
@@ -57,6 +57,63 @@ func (userService *UserService) Register() serializer.Response {
 	if err := models.Db.Create(&userInfo).Error; err != nil {
 		return serializer.Response{
 			Status:  http.StatusInternalServerError, // 500
+			Message: "数据库操作错误",
+		}
+	}
+	return serializer.Response{
+		Status:  http.StatusOK, // 200
+		Message: "用户注册成功",
+	}
+}
+
+// RegisterBegin 用户注册并开启事物
+func (userService *UserService) RegisterBegin() serializer.Response {
+	var user models.User
+	var userInfo models.UserInfo
+
+	var count int
+	models.Db.Model(&models.User{}).Where("user_name=?", userService.UserName).First(&user).Count(&count)
+	if count == 1 {
+		return serializer.Response{
+			Status:  http.StatusBadRequest, // 400
+			Message: fmt.Sprintf("用户“%v”已存在", userService.UserName),
+		}
+	}
+	user.UserName = userService.UserName
+	user.Email = userService.Email
+	if err := user.SetPassword(userService.Password); err != nil {
+		return serializer.Response{
+			Status:  http.StatusBadRequest, //400
+			Message: err.Error(),           // 密码加密错误
+		}
+	}
+	// 开始注册用户
+	// 开始事物
+	tx := models.Db.Begin()
+
+	// 执行数据库操作
+	if err := tx.Create(&user).Error; err != nil {
+		// 出现错误则回滚事物
+		tx.Rollback()
+		return serializer.Response{
+			Status:  http.StatusInternalServerError, //500
+			Message: "数据库操作错误",
+		}
+	}
+	userInfo.UserID = user.ID
+	if err := tx.Create(&userInfo).Error; err != nil {
+		// 出现错误则回滚事物
+		tx.Rollback()
+		return serializer.Response{
+			Status:  http.StatusInternalServerError, //500
+			Message: "数据库操作错误",
+		}
+	}
+	// 提交事物
+	if err := tx.Commit().Error; err != nil {
+		// 出现错误则回滚事物
+		return serializer.Response{
+			Status:  http.StatusInternalServerError, //500
 			Message: "数据库操作错误",
 		}
 	}
