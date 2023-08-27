@@ -6,6 +6,7 @@ import (
 
 	"chitchat2.0/models"
 	"chitchat2.0/pkg/serializer"
+	"chitchat2.0/pkg/utils"
 	"github.com/jinzhu/gorm"
 )
 
@@ -129,24 +130,26 @@ func (userService *UserService) RegisterBegin() serializer.Response {
 	}
 }
 
+// Login 用户登录
 func (userService *UserLoginService) Login() serializer.Response {
 
 	var user models.User
+	// First 检索单个对象，没有找到记录时，它会返回 ErrRecordNotFound 错误
 	if err := models.Db.Where("user_name=?", userService.UserName).First(&user).Error; err != nil {
+		//
 		if gorm.IsRecordNotFoundError(err) {
 			return serializer.Response{
-				Status:  http.StatusInternalServerError, //500
+				Status:  http.StatusBadRequest, //400
 				Data:    err,
-				Message: "数据库查询用户信息出错",
+				Message: "账户不存在，请先注册",
 			}
 		}
 		// 用户存在，其他因素的错误
 		return serializer.Response{
-			Status:  http.StatusBadRequest, //400
+			Status:  http.StatusInternalServerError, //500
 			Data:    err,
-			Message: "账户不存在，请先注册",
+			Message: "数据库查询用户信息出错",
 		}
-
 	}
 	// 找到用户
 	// 去验证登录用户的密码
@@ -157,10 +160,20 @@ func (userService *UserLoginService) Login() serializer.Response {
 			Message: "密码错误",
 		}
 	}
+
+	// 准备一个 token,作为响应返回
+	token, err := utils.GenerateToken(user.ID, user.UserName, userService.Password)
+	if err != nil {
+		return serializer.Response{
+			Status:  http.StatusInternalServerError, //500
+			Message: "Token 签发出错",
+		}
+	}
+
 	// 返回用户信息
 	return serializer.Response{
 		Status:  http.StatusOK,
-		Data:    user,
+		Data:    serializer.TokenData{User: user, Token: token},
 		Message: "登录成功",
 	}
 }

@@ -21,10 +21,11 @@ func Login(c *gin.Context) {
 // @Description Authenticate 接口实现了用户登录功能
 // @Tags User
 // @Accept json
+// @produce json
 // @Param username query string true "UserName(账户)"
 // @Param password query string true "Password(密码)"
-// @Success 200 {object} service.UserService
-// @Failure 400 {string} string "参数绑定失败"
+// @Success 200 {object} serializer.Response "登录成功"
+// @Failure 400 {object} httputil.HTTPError "登录失败"
 // @Router /authenticate [post]
 func Authenticate(c *gin.Context) {
 	var userLogin service.UserLoginService

@@ -50,9 +50,18 @@ beego 中可以使用官方给提供bee工具来热加载项目，但是 gin 中
 * 读取数据库配置信息后连接 mysql 数据库,设置表前缀和不加 s,启用日志和设置连接池；
 * 表自动迁移同时设置表关系（外键关联）和 表后缀信息（ENGINE=InnoDB charset=utf8mb4 COLLATE=utf8mb4_unicode_ci）
 
-9. 实现注册、登录功能
-* 设置路由、登录中间件  
-使用 ShouldBind 
+9. 实现注册、实现登录
+* 声明用于接收注册数据的 userSerive(用户服务) 结构体，使用 c.ShouldBind 进行数据绑定，同时进行表单验证。  
+表单验证提示错误消息是英语，不友好，对错误消息进行翻译。
+* 准备一个 serializer(序列化数据) 结构体，用于注册成功时，封装返回的数据。  
+封装响应状态码（Status）、数据（Data）、消息（Message）、错误(Error)
+* 开始实现用户注册  
+根据账号查询用户是否存在、对密码进行加密处理、开启事物、注册用户、提交事物、返回封装的数据
+*  根据返回数据中的响应状态码（Status）跳转页面
+* 开始实现用户登录  
+根账号查询用户是否存在、验证登录用户密码、生成Token、返回封装的数据
+*  根据返回数据中的响应状态码（Status）跳转页面
+
 
 ## 项目依赖
 1. 搭建项目
@@ -84,9 +93,11 @@ beego 中可以使用官方给提供bee工具来热加载项目，但是 gin 中
 * r.LoadHTMLGlob
 
 8. gorm 和 驱动程序
-* `go get -u gorm.io/gorm` 或 `go get -u github.com/jinzhu/gorm` 一般用后者
+* `go get -u gorm.io/gorm` 或 `go get -u github.com/jinzhu/gorm` 国内一般用后者
 * `go get -u github.com/jinzhu/gorm/dialects/mysql`
 
+9. Token
+* `go get -u github.com/dgrijalva/jwt-go`
 
 ## 项目结构
 - conf : 用于存储配置文件

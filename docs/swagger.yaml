@@ -26,22 +26,6 @@ definitions:
         description: 响应状态码
         type: integer
     type: object
-  service.UserService:
-    properties:
-      email:
-        type: string
-      password:
-        maxLength: 16
-        minLength: 5
-        type: string
-      username:
-        maxLength: 15
-        minLength: 3
-        type: string
-    required:
-    - password
-    - username
-    type: object
 host: 127.0.0.1:8000
 info:
   contact:
@@ -71,15 +55,17 @@ paths:
         name: password
         required: true
         type: string
+      produces:
+      - application/json
       responses:
         "200":
-          description: OK
+          description: 登录成功
           schema:
-            $ref: '#/definitions/service.UserService'
+            $ref: '#/definitions/serializer.Response'
         "400":
-          description: 参数绑定失败
+          description: 登录失败
           schema:
-            type: string
+            $ref: '#/definitions/httputil.HTTPError'
       summary: 用户登录
       tags:
       - User

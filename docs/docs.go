@@ -30,6 +30,9 @@ const docTemplate = `{
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "User"
                 ],
@@ -52,15 +55,15 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "登录成功",
                         "schema": {
-                            "$ref": "#/definitions/service.UserService"
+                            "$ref": "#/definitions/serializer.Response"
                         }
                     },
                     "400": {
-                        "description": "参数绑定失败",
+                        "description": "登录失败",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/httputil.HTTPError"
                         }
                     }
                 }
@@ -156,28 +159,6 @@ const docTemplate = `{
                 "status": {
                     "description": "响应状态码",
                     "type": "integer"
-                }
-            }
-        },
-        "service.UserService": {
-            "type": "object",
-            "required": [
-                "password",
-                "username"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string",
-                    "maxLength": 16,
-                    "minLength": 5
-                },
-                "username": {
-                    "type": "string",
-                    "maxLength": 15,
-                    "minLength": 3
                 }
             }
         }

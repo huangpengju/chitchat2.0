@@ -15,6 +15,9 @@ var (
 	// 应用的模式
 	RunMode string //【debug 开发 release 发布】
 
+	// app 配置
+	JWT_SECRET string
+
 	// server 配置
 	HTTPHost     string
 	HTTPPort     int
@@ -49,6 +52,9 @@ func init() {
 	// 加载应用的模式【debug 开发 release 发布】
 	loadBase()
 
+	// loadApp 加载 app 配置
+	loadApp()
+
 	// loadServer 加载 server 服务器配置
 	loadServer()
 
@@ -66,6 +72,13 @@ func loadBase() {
 	// Key("RUN_MODE") 表示操作键
 	// MustString("debug") 当操作键不存在或者转换失败时，使用默认值 debug
 	RunMode = Cfg.Section("").Key("RUN_MODE").MustString("debug")
+}
+func loadApp() {
+	sec, err := Cfg.GetSection("app")
+	if err != nil {
+		log.Fatalf("获取 app 分区失败%v", err)
+	}
+	JWT_SECRET = sec.Key("JWT_SECRET").MustString("23347$040412")
 }
 
 // loadServer 加载 server 服务器配置

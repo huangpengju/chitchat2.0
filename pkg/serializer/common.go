@@ -12,3 +12,9 @@ type Response struct {
 	// 返回的错误
 	Error string `json:"error"`
 }
+
+// TokenData 是登录响应数据的结构体
+type TokenData struct {
+	User  interface{} `json:"user"`
+	Token string
+}
