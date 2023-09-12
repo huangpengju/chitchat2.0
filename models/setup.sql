@@ -22,5 +22,5 @@ CREATE TABLE `cc_user_info`(
     `intro` varchar(500) DEFAULT NULL COMMENT '简介',
     PRIMARY KEY (`id`),
     KEY `FK_user` (`user_id`),
-    CONSTRAINT `FK_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
+    CONSTRAINT `FK_user` FOREIGN KEY (`user_id`) REFERENCES `cc_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
