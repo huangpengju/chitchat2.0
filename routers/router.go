@@ -1,3 +1,13 @@
+/*
+ * @Author: huangpengju 15713716933@163.com
+ * @Date: 2023-08-21 08:24:18
+ * @LastEditors: huangpengju 15713716933@163.com
+ * @LastEditTime: 2023-11-24 15:35:46
+ * @FilePath: \chitchat2.0\routers\router.go
+ * @Description:
+ *
+ * Copyright (c) 2023 by huangpengju, All Rights Reserved.
+ */
 package routers
 
 import (
@@ -64,7 +74,7 @@ func InitRouter() *gin.Engine {
 		{Uuid: 2, Name: "王二2", Gender: "男", Age: 18, CreatedAtDate: "2023-08-23", NumReplies: 2, Topic: "前台2号---王二"},
 		{Uuid: 3, Name: "麻子3", Gender: "男", Age: 19, CreatedAtDate: "2023-08-24", NumReplies: 3, Topic: "前台3号---麻子"}}
 
-	r.GET("/chitchat", func(c *gin.Context) {
+	r.GET("/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "default/layout.html", gin.H{
 			"state": 1, // 加载公共的导航栏
 			"users": users,
